@@ -12,7 +12,7 @@ import com.apress.prospring3.ch13.service.ContactService;
 
 /**
  * @author Clarence
- *
+ * 
  */
 public class TxAnnotationSample {
 
@@ -21,25 +21,32 @@ public class TxAnnotationSample {
 		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
 		ctx.load("classpath:tx-annotation-app-context.xml");
 		ctx.refresh();
-		
-		ContactService contactService = ctx.getBean("contactService", ContactService.class);
+
+		ContactService contactService = ctx.getBean("contactService",
+				ContactService.class);
 
 		// Testing findAll() method
-/*		List<Contact> contacts = contactService.findAll();
-		
-		for (Contact contactTemp: contacts) {
+		List<Contact> contacts = contactService.findAll();
+
+		for (Contact contactTemp : contacts) {
 			System.out.println(contactTemp);
-		}	*/	
-		
-		// Testing save() method
-/*		Contact contact = contactService.findById(1l);
+		}
+
+		// Testing save() method with rollback
+		Contact contact = new Contact();
 		contact.setFirstName("Peter");
-		contactService.save(contact);
-		System.out.println("Contact saved successfully");	*/
-		
+		contact.setLastName(" Pan");
+		try {
+			contactService.save(contact);
+			System.out.println("Contact saved successfully");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		// Testing countAll() method
-		System.out.println("Contact count: " + contactService.countAll());		
-		
+		System.out.println("Contact count: " + contactService.countAll());
+
 	}
 
 }

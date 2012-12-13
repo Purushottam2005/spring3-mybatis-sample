@@ -18,7 +18,7 @@ import com.google.common.collect.Lists;
 
 /**
  * @author Clarence
- *
+ * 
  */
 @Service("contactService")
 @Repository
@@ -27,25 +27,26 @@ public class ContactServiceImpl implements ContactService {
 
 	@Autowired
 	private ContactRepository contactRepository;
-	
-	@Transactional(readOnly=true)
+
+	@Transactional(readOnly = true)
 	public List<Contact> findAll() {
 		return Lists.newArrayList(contactRepository.findAll());
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Contact findById(Long id) {
 		return contactRepository.findOne(id);
 	}
-	
+
 	public Contact save(Contact contact) {
-		return contactRepository.save(contact);
+		Contact returnContact = contactRepository.save(contact);
+
+		throw new RuntimeException();
 	}
 
-	@Transactional(propagation=Propagation.NEVER)
-	//@Transactional(readOnly=true)
+	@Transactional(propagation = Propagation.NEVER)
+	// @Transactional(readOnly=true)
 	public long countAll() {
 		return contactRepository.countAllContacts();
 	}
-
 }
